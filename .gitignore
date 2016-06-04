@@ -38,3 +38,6 @@
 *.uvopt
 *.iex
 *.plg
+*.lnp
+*.m51
+proj_embed

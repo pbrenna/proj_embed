@@ -34,6 +34,19 @@ bit i2c_lock = 0;
 unsigned char _i2c_params;              //TODO: sostituire con 2 bit nudi e crudi?
 Event _i2c_callback;            //event to be enabled after stop
 
+#define I2C_COMMAND(addr,dati,lungh,callback,params,read_len) { \
+	i2c_lock = 1;              \
+	_i2c_callback = callback;  \
+	_i2c_send_lungh = lungh;   \
+	_i2c_send_index = 0;       \
+	_i2c_send_data = dati;     \
+	_i2c_send_addr = addr;     \
+	_i2c_params = params;      \
+	_i2c_read_len = read_len;  \
+	_i2c_read_index = 0;       \
+	STA=1;                     \
+}
+/*
 void i2c_command(unsigned char addr, char* dati, unsigned char lungh, Event callback, unsigned char params, unsigned char read_len){
 	i2c_lock = 1;
 	_i2c_callback = callback;
@@ -48,6 +61,7 @@ void i2c_command(unsigned char addr, char* dati, unsigned char lungh, Event call
 	_i2c_read_index = 0;
 	STA=1;
 }
+*/
 
 void _i2c_stop(){
 	if ((_i2c_read_len == 0) & (_i2c_params & I2C_STOP) ){
@@ -124,9 +138,9 @@ void i2c_interrupt() interrupt 7 {
 
 unsigned char init_d[] = {0x38,0x39,0x14,0x74,0x54,0x6f,0x0f,0x01};
 void init_display(Event callback){
-	i2c_command(DISPLAY, init_d, sizeof(init_d), callback,I2C_STOP|I2C_WRITE, 0);
+	I2C_COMMAND(DISPLAY, init_d, sizeof(init_d), callback,I2C_STOP|I2C_WRITE, 0);
 }
 
 void display_write(char* text, unsigned char len,Event callb){
-	i2c_command(DISPLAY, text, len, callb, I2C_STOP|I2C_WRITE,0);
+	I2C_COMMAND(DISPLAY, text, len, callb, I2C_STOP|I2C_WRITE,0);
 }
