@@ -4,7 +4,8 @@
 extern unsigned long ev_flags;
 
 typedef enum Event {
-	event1,
-	event2,
-	event3
+	ev_i2c_interrupt
 } Event;
+
+void dispatch();
+
