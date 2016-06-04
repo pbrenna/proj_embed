@@ -1,0 +1,6 @@
+"main.obj",
+"ev.obj",
+"init.obj",
+"i2c_machine.obj" 
+TO "proj_embed" 
+RAMSIZE(256) 

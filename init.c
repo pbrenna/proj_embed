@@ -1,4 +1,4 @@
-#incude "c8051f020.h"
+#include "c8051f020.h"
 
 
 void init(){
@@ -7,7 +7,7 @@ void init(){
 	OSCICN &= 0x14;     //Disable missing clock detector
 	                    //and set internal osc at 2 MHz as the clock source
 	EA = 1;
-	LED = 0;
+//	LED = 0;
 	
 	
 	//initialize i2c

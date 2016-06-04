@@ -1,4 +1,5 @@
-#include "event.h"
+#include "ev.h"
+#include "c8051f020.h"
 
 #define SMB_START 0x08
 #define SMB_RESTART 0x10
@@ -35,7 +36,7 @@ Event _i2c_callback;            //event to be enabled after stop
 
 void i2c_command(unsigned char addr, char* dati, unsigned char lungh, Event callback, unsigned char params, unsigned char read_len){
 	i2c_lock = 1;
-	//_i2c_callback = callback;
+	_i2c_callback = callback;
 	//STO=1;
 	//STO=0;
 	_i2c_send_lungh = lungh;
@@ -52,7 +53,7 @@ void _i2c_stop(){
 	if ((_i2c_read_len == 0) & (_i2c_params & I2C_STOP) ){
 		STO = 1;
 		STA = 0;
-		EV_ENABLE(i2c_callback);
+		EV_ENABLE(_i2c_callback);
 		//tabella_eventi[_i2c_callback] = 1;
 	}
 	if (_i2c_params & I2C_WRITE) {
@@ -101,7 +102,7 @@ void i2c_state_machine(){
 		break;
 	case SMB_DATA_R_ACK:
 		//TODO in realtà sarà un puntatore
-		i2c_return = SMB0DAT;
+		//i2c_return = SMB0DAT;
 		STA = 0;
 		STO = 1;
 		AA = 0;
@@ -122,6 +123,10 @@ void i2c_interrupt() interrupt 7 {
 }
 
 unsigned char init_d[] = {0x38,0x39,0x14,0x74,0x54,0x6f,0x0f,0x01};
-void init_display(){
-	i2c_command(DISPLAY, init_d, sizeof(init_d), ev_scrivi_ciao,I2C_STOP|I2C_WRITE, 0);
+void init_display(Event callback){
+	i2c_command(DISPLAY, init_d, sizeof(init_d), callback,I2C_STOP|I2C_WRITE, 0);
+}
+
+void display_write(char* text, unsigned char len,Event callb){
+	i2c_command(DISPLAY, text, len, callb, I2C_STOP|I2C_WRITE,0);
 }
