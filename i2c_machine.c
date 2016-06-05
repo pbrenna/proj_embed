@@ -136,7 +136,7 @@ void i2c_interrupt() interrupt 7 {
 	EV_ENABLE(ev_i2c_interrupt);
 }
 
-unsigned char init_d[] = {0x38,0x39,0x14,0x74,0x54,0x6f,0x0f,0x01};
+code unsigned char init_d[] = {0x38,0x39,0x14,0x74,0x54,0x6f,0x0f,0x01};
 void init_display(Event callback){
 	I2C_COMMAND(DISPLAY, init_d, sizeof(init_d), callback,I2C_STOP|I2C_WRITE, 0);
 }

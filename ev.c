@@ -2,7 +2,7 @@
 #include "i2c_machine.h"
 unsigned long ev_flags = 0;
 
-char ciao[] = "@ciao";
+code char ciao[] = "@ciao";
 void dispatch(){
 	IF_EV(ev_i2c_interrupt) {
 		EV_DISABLE(ev_i2c_interrupt);
