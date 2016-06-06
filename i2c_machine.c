@@ -1,5 +1,6 @@
 #include "ev.h"
 #include "c8051f020.h"
+#include "i2c_machine.h"
 
 #define SMB_START 0x08
 #define SMB_RESTART 0x10
@@ -11,12 +12,6 @@
 #define SMB_DATA_NACK 0x30
 #define SMB_DATA_R_ACK 0x50
 
-#define I2C_STOP 0x01
-#define I2C_RECV 0x02
-#define I2C_WRITE 0x04
-#define DISPLAY 0x7C
-#define TERM 0
-#define ACCEL 0x98
 
 //state variables for i2c receive
 char* i2c_return = 0;
@@ -33,7 +28,7 @@ unsigned char _i2c_send_index;
 bit i2c_lock = 0;
 unsigned char _i2c_params;              //TODO: sostituire con 2 bit nudi e crudi?
 Event _i2c_callback;            //event to be enabled after stop
-
+/*
 #define I2C_COMMAND(addr,dati,lungh,callback,params,read_len) { \
 	i2c_lock = 1;              \
 	_i2c_callback = callback;  \
@@ -46,22 +41,20 @@ Event _i2c_callback;            //event to be enabled after stop
 	_i2c_read_index = 0;       \
 	STA=1;                     \
 }
-/*
-void i2c_command(unsigned char addr, char* dati, unsigned char lungh, Event callback, unsigned char params, unsigned char read_len){
-	i2c_lock = 1;
-	_i2c_callback = callback;
-	//STO=1;
-	//STO=0;
-	_i2c_send_lungh = lungh;
-	_i2c_send_index = 0;
-	_i2c_send_data = dati;
-	_i2c_send_addr = addr;
-	_i2c_params = params;
-	_i2c_read_len = read_len;
-	_i2c_read_index = 0;
-	STA=1;
-}
 */
+void i2c_command(unsigned char addr, char* dati, unsigned char lungh, Event callback, unsigned char params, unsigned char read_len){
+	i2c_lock = 1;              
+	_i2c_callback = callback;  
+	_i2c_send_lungh = lungh;   
+	_i2c_send_index = 0;       
+	_i2c_send_data = dati;     
+	_i2c_send_addr = addr;     
+	_i2c_params = params;      
+	_i2c_read_len = read_len;  
+	_i2c_read_index = 0;       
+	STA=1;                     
+}
+
 
 void _i2c_stop(){
 	if ((_i2c_read_len == 0) & (_i2c_params & I2C_STOP) ){
@@ -136,13 +129,4 @@ void i2c_state_machine(){
 
 void i2c_interrupt() interrupt 7 {
 	i2c_state_machine();
-}
-
-code unsigned char init_d[] = {0x38,0x39,0x14,0x74,0x54,0x6f,0x0f,0x01};
-void init_display(Event callback){
-	I2C_COMMAND(DISPLAY, init_d, sizeof(init_d), callback,I2C_STOP|I2C_WRITE, 0);
-}
-
-void display_write(char* text, unsigned char len,Event callb){
-	I2C_COMMAND(DISPLAY, text, len, callb, I2C_STOP|I2C_WRITE,0);
 }

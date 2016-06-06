@@ -41,3 +41,7 @@
 *.lnp
 *.m51
 proj_embed
+*.LST
+*.OBJ
+*.M51
+
