@@ -14,44 +14,32 @@
 
 
 //state variables for i2c receive
-char* i2c_return = 0;
+char* _i2c_return;
 unsigned char _i2c_read_len;
 unsigned char _i2c_read_index;
 
 //state variables for i2c send
 char* _i2c_send_data;
 char _i2c_send_addr;
-unsigned char _i2c_send_lungh;
+unsigned char _i2c_send_len;
 unsigned char _i2c_send_index;
 
 //control variables for i2c state machine
 bit i2c_lock = 0;
 unsigned char _i2c_params;              //TODO: sostituire con 2 bit nudi e crudi?
 Event _i2c_callback;            //event to be enabled after stop
-/*
-#define I2C_COMMAND(addr,dati,lungh,callback,params,read_len) { \
-	i2c_lock = 1;              \
-	_i2c_callback = callback;  \
-	_i2c_send_lungh = lungh;   \
-	_i2c_send_index = 0;       \
-	_i2c_send_data = dati;     \
-	_i2c_send_addr = addr;     \
-	_i2c_params = params;      \
-	_i2c_read_len = read_len;  \
-	_i2c_read_index = 0;       \
-	STA=1;                     \
-}
-*/
-void i2c_command(unsigned char addr, char* dati, unsigned char lungh, Event callback, unsigned char params, unsigned char read_len){
+
+void i2c_command(unsigned char addr, char* dati, unsigned char lungh, Event callback, unsigned char params, unsigned char read_len, char* ret){
 	i2c_lock = 1;              
 	_i2c_callback = callback;  
-	_i2c_send_lungh = lungh;   
+	_i2c_send_len = lungh;   
 	_i2c_send_index = 0;       
 	_i2c_send_data = dati;     
 	_i2c_send_addr = addr;     
 	_i2c_params = params;      
 	_i2c_read_len = read_len;  
-	_i2c_read_index = 0;       
+	_i2c_read_index = 0;
+	_i2c_return = ret;
 	STA=1;                     
 }
 
@@ -92,7 +80,7 @@ void i2c_state_machine(){
 	case SMB_ADDR_ACK_R:
 	case SMB_ADDR_ACK:
 		//accendi display
-		if(_i2c_send_lungh)
+		if(_i2c_send_len)
 			SMB0DAT = _i2c_send_data[0];
 		else 
 			_i2c_stop();
@@ -103,7 +91,7 @@ void i2c_state_machine(){
 	case SMB_DATA_NACK:
 		//micro_aspetta(wait_time[inst_p]);
 		//milli_aspetta(10);
-		if (_i2c_send_index < _i2c_send_lungh) {
+		if (_i2c_send_index < _i2c_send_len) {
 			SMB0DAT = _i2c_send_data[_i2c_send_index];
 		} else {
 			_i2c_stop();
@@ -111,15 +99,15 @@ void i2c_state_machine(){
 		break;
 	case SMB_DATA_R_ACK:
 		//TODO in realtà sarà un puntatore
-		//i2c_return = SMB0DAT;
-		STA = 0;
-		STO = 1;
-		AA = 0;
+		_i2c_return[_i2c_read_index++] = SMB0DAT;
 		//TODO controlla se ha finito di ricevere
-		if(0){
-			//cose
+		if(_i2c_read_index == _i2c_read_len){
+			STO = 1;
+			STA = 0;
+			EV_ENABLE(_i2c_callback);
+			i2c_lock = 0;
+			//AA = 0;
 		}
-		EV_ENABLE(_i2c_callback);
 		break;
 	default:
 		break;

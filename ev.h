@@ -6,6 +6,8 @@ extern unsigned long ev_flags;
 
 typedef enum Event {
 	ev_ciao,
+	ev_thermometer_read,
+	ev_thermometer_save,
 	ev_nop
 } Event;
 

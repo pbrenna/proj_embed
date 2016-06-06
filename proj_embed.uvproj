@@ -370,6 +370,21 @@
               <FileType>1</FileType>
               <FilePath>.\i2c_machine.c</FilePath>
             </File>
+            <File>
+              <FileName>display.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\display.c</FilePath>
+            </File>
+            <File>
+              <FileName>thermometer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\thermometer.c</FilePath>
+            </File>
+            <File>
+              <FileName>util.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\util.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
