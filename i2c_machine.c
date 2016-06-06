@@ -92,6 +92,8 @@ void i2c_state_machine(){
 	case SMB_ADDR_NACK_R:
 	case SMB_ADDR_NACK:
 		STO = 1;
+		STA = 0;
+		STO = 0;
 		STA = 1;
 		break;
 	case SMB_ADDR_ACK_R:
@@ -129,11 +131,11 @@ void i2c_state_machine(){
 	default:
 		break;
 	}
+	SI = 0;
 }
 
 void i2c_interrupt() interrupt 7 {
-	SI = 0;
-	EV_ENABLE(ev_i2c_interrupt);
+	i2c_state_machine();
 }
 
 code unsigned char init_d[] = {0x38,0x39,0x14,0x74,0x54,0x6f,0x0f,0x01};

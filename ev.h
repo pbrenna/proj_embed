@@ -5,7 +5,6 @@
 extern unsigned long ev_flags;
 
 typedef enum Event {
-	ev_i2c_interrupt,
 	ev_ciao,
 	ev_nop
 } Event;

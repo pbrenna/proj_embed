@@ -10,8 +10,12 @@ void init(){
 //	LED = 0;
 	
 	
-	//initialize i2c
-	
+
+	SI = 0;
+//	P0 = 0;
+//	P0MDOUT |= 0x40; //Set P1.6 to push-pull
+//	for (i=0;i<50000;i++);
+//	P0MDOUT = 0;
 	XBR0 = 0x05; 		//enable smbus
 	XBR1 = 0;
 	XBR2 = 0x40; 		//enable crossbar, pull up
@@ -20,6 +24,7 @@ void init(){
 	EIE1 |= 2;			//enalbe smb interrupt
 	SCON0 |= 0x10;	//enable uart0 receive
 	P1MDOUT |= 0x40; //Set P1.6 to push-pull
+	//SM_BUSY=0;
 	STO = 1;
 	STA = 0;
 	SI = 0;
