@@ -15,5 +15,5 @@ void display_write(char* text, unsigned char len, Event callb);
 #define I2C_RECV 0x02
 #define I2C_WRITE 0x04
 #define DISPLAY 0x7C
-#define TERM 0
+#define TERM 0x90
 #define ACCEL 0x98
