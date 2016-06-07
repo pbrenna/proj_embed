@@ -8,7 +8,7 @@ sbit Led = P1^6;
 void main(){
 	Led = 0;
 	init();
-	init_display(ev_ciao);
+	init_display(ev_init_accel);
 	while(1){
 		dispatch();
 	}

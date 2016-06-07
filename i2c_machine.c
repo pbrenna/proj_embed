@@ -11,6 +11,7 @@
 #define SMB_DATA_ACK 0x28
 #define SMB_DATA_NACK 0x30
 #define SMB_DATA_R_ACK 0x50
+#define SMB_DATA_R_NACK 0x58
 
 
 //state variables for i2c receive
@@ -50,11 +51,12 @@ void _i2c_stop(){
 		STA = 0;
 		EV_ENABLE(_i2c_callback);
 		//tabella_eventi[_i2c_callback] = 1;
+		i2c_lock = 0;
 	}
 	if (_i2c_params & I2C_WRITE) {
 		EV_ENABLE(_i2c_callback);
+		i2c_lock = 0;
 	}
-	i2c_lock = 0;
 }
 
 
@@ -97,10 +99,13 @@ void i2c_state_machine(){
 			_i2c_stop();
 		}
 		break;
+	case SMB_DATA_R_NACK:
 	case SMB_DATA_R_ACK:
-		//TODO in realtà sarà un puntatore
 		_i2c_return[_i2c_read_index++] = SMB0DAT;
-		//TODO controlla se ha finito di ricevere
+		//controlla se ha finito di ricevere
+		if(_i2c_read_index == 2){
+			AA = 0;
+		}
 		if(_i2c_read_index == _i2c_read_len){
 			STO = 1;
 			STA = 0;

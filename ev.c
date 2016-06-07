@@ -8,7 +8,13 @@ code char ciao[] = "@ciao";
 void dispatch(){
 
 	if(!i2c_lock){
-		IF_EV(ev_ciao){
+		IF_EV(ev_rcv_axis){
+			EV_DISABLE(ev_rcv_axis);
+			rcv_axis();
+		} else IF_EV(ev_read_axis){
+			EV_DISABLE(ev_read_axis);
+			read_axis();
+		} else IF_EV(ev_ciao){
 			EV_DISABLE(ev_ciao);
 			display_write(ciao, 5, ev_thermometer_read);
 		} else IF_EV(ev_thermometer_read){
