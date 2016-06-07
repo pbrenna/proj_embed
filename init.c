@@ -2,12 +2,16 @@
 
 
 void init(){
+	unsigned int i = 0;
 	WDTCN = 0xde;
 	WDTCN = 0xad;
 	OSCICN &= 0x14;     //Disable missing clock detector
 	                    //and set internal osc at 2 MHz as the clock source
 	EA = 1;
 //	LED = 0;
+	while (i < 25000){
+		i++;
+	}
 	
 	
 
