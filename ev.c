@@ -1,6 +1,7 @@
 #include "ev.h"
 #include "i2c_machine.h"
 #include "thermometer.h"
+#include "accel.h"
 unsigned long ev_flags = 0;
 
 code char ciao[] = "@ciao";
@@ -13,6 +14,9 @@ void dispatch(){
 		} else IF_EV(ev_thermometer_read){
 			EV_DISABLE(ev_thermometer_read);
 			thermometer_read();
+		} else IF_EV(ev_init_accel) {
+			EV_DISABLE(ev_init_accel);
+			init_accel();
 		}
 	}
 	IF_EV(ev_thermometer_save){

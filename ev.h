@@ -8,6 +8,7 @@ typedef enum Event {
 	ev_ciao,
 	ev_thermometer_read,
 	ev_thermometer_save,
+	ev_init_accel,
 	ev_nop
 } Event;
 
