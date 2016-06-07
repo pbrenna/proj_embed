@@ -45,7 +45,7 @@ void i2c_command(unsigned char addr, char* dati, unsigned char lungh, Event call
 
 
 void _i2c_stop(){
-	if ((_i2c_read_len == 0) & (_i2c_params & I2C_STOP) ){
+	if ((_i2c_read_len == 0) && (_i2c_params & I2C_STOP) ){
 		STO = 1;
 		STA = 0;
 		EV_ENABLE(_i2c_callback);
