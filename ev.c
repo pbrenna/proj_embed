@@ -2,6 +2,7 @@
 #include "i2c_machine.h"
 #include "thermometer.h"
 #include "accel.h"
+#include "c8051f020.h"
 unsigned long ev_flags = 0;
 
 code char ciao[] = "@ciao";
@@ -24,6 +25,9 @@ void dispatch(){
 			EV_DISABLE(ev_init_accel);
 			init_accel();
 		}
+	}
+	if(SI){
+		i2c_state_machine();
 	}
 	IF_EV(ev_thermometer_save){
 		EV_DISABLE(ev_thermometer_save);
