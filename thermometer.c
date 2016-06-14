@@ -19,7 +19,7 @@ void thermometer_save(){
 	if(therm_data.raw[0] & 0x10)
 		therm_data.raw[0] |= 0xF0;
 	therm_data.temp = therm_data.temp / 16;
-	len = num2string(therm_data.temp, disp_temp+2);
+	len = num2string(therm_data.temp,0, disp_temp+2);
 	/*num2string(therm_data.temp%10, disp_temp + 2+len);
 	disp_temp[2+len]='.';
 	disp_temp[4+len]='`';

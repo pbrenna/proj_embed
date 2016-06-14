@@ -1,9 +1,11 @@
 #include "accel.h"
 #include "ev.h"
 #include "c8051f020.h"
-float average[3]={0,0,0};
+int average[3]={0,0,0};
 sbit Led = P1^6;
-float orientation(char in){
+int orientation(char in){
+	in = in<<2;
+	in = in/4;
 	if (in < 0){
 		in = -in;
 		return -lut_arccos[in];
@@ -21,10 +23,10 @@ void calc_average(){
 			continue;
 		average[0] += orientation(axes[pos][0]);
 		average[1] += orientation(axes[pos][1]);
-		average[2] += orientation((axes[pos][2]>0?90:-90) - axes[pos][2]);
+		average[2] += orientation((axes[pos][2]>0?900:-900) - axes[pos][2]);
 	}
 	average[0] = average[0] / (BUF_LEN -1);
 	average[1] = average[1] / (BUF_LEN -1);
-	average[2] = average[2] /*/ (BUF_LEN -1)*/;
+	average[2] = average[2] / (BUF_LEN -1);
 	EV_ENABLE(ev_ciao);
 }

@@ -2,41 +2,41 @@
 #include "i2c_machine.h"
 #include "c8051f020.h"
 #include "accel.h"
-/*
-code float lut_arccos[32] = {
+
+code int lut_arccos[32] = {
 	0,
-	2.69,
-	5.38,
-	8.08,
-	10.81,
-	13.55,
-	16.33,
-	19.16,
-	22.02,
-	24.95,
-	27.95,
-	31.04,
-	34.23,
-	37.54,
-	41.01,
-	44.68,
-	48.59,
-	52.83,
-	57.54,
-	62.95,
-	69.64,
-	79.86,
-	90,
-	90,
-	90,
-	90,
-	90,
-	90,
-	90,
-	90,
-	90,
-	90	
-};*/
+	27,
+	54,
+	81,
+	108,
+	135,
+	163,
+	192,
+	220,
+	250,
+	280,
+	310,
+	342,
+	375,
+	410,
+	447,
+	486,
+	528,
+	575,
+	630,
+	696,
+	799,
+	900,
+	900,
+	900,
+	900,
+	900,
+	900,
+	900,
+	900,
+	900,
+	900	
+};
 
 
 unsigned char buf_index = 0;
@@ -54,6 +54,6 @@ void read_axis(){
 
 void rcv_axis(){
 	Led = STO;
-	i2c_command(ACCEL,axis,0,ev_ciao, I2C_STOP,3, axes[buf_index++]);
+	i2c_command(ACCEL,axis,0,ev_average, I2C_STOP,3, axes[buf_index++]);
 	buf_index = buf_index % BUF_LEN;
 }

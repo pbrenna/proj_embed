@@ -9,9 +9,7 @@ void init(){
 	                    //and set internal osc at 2 MHz as the clock source
 	EA = 1;
 //	LED = 0;
-	while (i < 50000){
-		i++;
-	}
+	
 	
 	
 
