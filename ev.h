@@ -11,6 +11,7 @@ typedef enum Event {
 	ev_init_accel,
 	ev_read_axis,
 	ev_rcv_axis,
+	ev_average,
 	ev_nop
 } Event;
 

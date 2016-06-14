@@ -9,7 +9,7 @@ void init(){
 	                    //and set internal osc at 2 MHz as the clock source
 	EA = 1;
 //	LED = 0;
-	while (i < 25000){
+	while (i < 50000){
 		i++;
 	}
 	
@@ -25,7 +25,7 @@ void init(){
 	XBR2 = 0x40; 		//enable crossbar, pull up
 	SMB0CN = 0x44;	//enable smb 
 	SMB0CR = -80;
-	//EIE1 |= 2;			//enalbe smb interrupt
+	EIE1 |= 2;			//enalbe smb interrupt
 	SCON0 |= 0x10;	//enable uart0 receive
 	P1MDOUT |= 0x40; //Set P1.6 to push-pull
 	//SM_BUSY=0;

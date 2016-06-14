@@ -119,7 +119,7 @@ void i2c_state_machine(){
 	}
 	SI = 0;
 }
-/*
+
 void i2c_interrupt() interrupt 7 {
 	i2c_state_machine();
-}*/
+}
