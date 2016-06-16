@@ -5,12 +5,13 @@
 #include "average.h"
 #include "c8051f020.h"
 #include "util.h"
+#include "display.h"
 unsigned long ev_flags = 0;
 sbit Led = P1^6;
-
-char ciao[] = "@           ";
+unsigned int potabho = 0;
+char ciao[] = "@               ";
 void dispatch(){
-	unsigned int i;
+	unsigned char asd = 1;
 	if(!i2c_lock){
 		IF_EV(ev_init_accel) {
 			EV_DISABLE(ev_init_accel);
@@ -20,20 +21,20 @@ void dispatch(){
 			rcv_axis();
 		} else IF_EV(ev_read_axis){
 			EV_DISABLE(ev_read_axis);
-			i = 0;
-			while (i < 50000){
-				i++;
-			}
+			for(potabho = 0; potabho < 50000; potabho++);
 			read_axis();
 		} else IF_EV(ev_ciao){
 			EV_DISABLE(ev_ciao);
 			Led = 1;
-			average[0] = 15;
-			num2string(average[0], 1,ciao+1);
-			num2string(average[1], 1,ciao+5);
-			num2string(average[2], 1,ciao+8);
+			asd += num2string(average[0], 1,ciao+asd);
+			asd += num2string(average[1], 1,ciao+asd);
+			num2string(average[2], 1,ciao+asd);
 			display_write(ciao, 12, ev_read_axis);
-		} /*else IF_EV(ev_thermometer_read){
+		}else IF_EV(ev_display_clear){
+			EV_DISABLE(ev_display_clear);
+			display_clear(ev_ciao);
+		}			
+		/*else IF_EV(ev_thermometer_read){
 			EV_DISABLE(ev_thermometer_read);
 			thermometer_read();
 		}*/ 

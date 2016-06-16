@@ -111,7 +111,7 @@ void i2c_state_machine(){
 			STA = 0;
 			EV_ENABLE(_i2c_callback);
 			i2c_lock = 0;
-			//AA = 0;
+			AA = 1;
 		}
 		break;
 	default:

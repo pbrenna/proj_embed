@@ -10,8 +10,10 @@ int pow(int a, int b){
 void nop(){}
 
 int num2string(int num, char precision, char* string){
-	int i = 0;
-	int n_caratteri = 0;
+	int i ;
+	int n_caratteri;
+	i=0;
+	n_caratteri=0;
 	if(num == 0){	
 		string[0] = '+';
 		string[1] = '0';

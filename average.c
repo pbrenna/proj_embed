@@ -4,8 +4,8 @@
 int average[3]={0,0,0};
 sbit Led = P1^6;
 int orientation(char in){
-	in = in<<2;
-	in = in/4;
+	if(in & 00100000)
+		in = in | 11100000;
 	if (in < 0){
 		in = -in;
 		return -lut_arccos[in];
@@ -28,5 +28,5 @@ void calc_average(){
 	average[0] = average[0] / (BUF_LEN -1);
 	average[1] = average[1] / (BUF_LEN -1);
 	average[2] = average[2] / (BUF_LEN -1);
-	EV_ENABLE(ev_ciao);
+	EV_ENABLE(ev_display_clear);
 }

@@ -12,7 +12,8 @@ typedef enum Event {
 	ev_read_axis,
 	ev_rcv_axis,
 	ev_average,
-	ev_nop
+	ev_nop,
+	ev_display_clear
 } Event;
 
 void dispatch();

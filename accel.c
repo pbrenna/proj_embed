@@ -55,5 +55,5 @@ void read_axis(){
 void rcv_axis(){
 	Led = STO;
 	i2c_command(ACCEL,axis,0,ev_average, I2C_STOP,3, axes[buf_index++]);
-	buf_index = buf_index % BUF_LEN;
+	buf_index = buf_index % BUF_LEN ;
 }
