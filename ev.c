@@ -29,7 +29,7 @@ void dispatch(){
 			asd += num2string(average[0], 1,ciao+asd);
 			asd += num2string(average[1], 1,ciao+asd);
 			num2string(average[2], 1,ciao+asd);
-			display_write(ciao, 12, ev_read_axis);
+			display_write(ciao, 15, ev_read_axis);
 		}else IF_EV(ev_display_clear){
 			EV_DISABLE(ev_display_clear);
 			display_clear(ev_ciao);
