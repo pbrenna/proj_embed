@@ -2,10 +2,10 @@
 #include "i2c_machine.h"
 #include "thermometer.h"
 #include "util.h"
-
+#include "c8051f020.h"
 
 int therm_old = 0;
-
+sbit Led = P1^6;
 
 int_chars therm_data;
 code char magia[] = {0x08, 0x40, 0x50, 0x50};
@@ -18,6 +18,12 @@ void thermometer_save(){
 	if(therm_data.raw[0] & 0x10)
 		therm_data.raw[0] |= 0xF0;
 	therm_data.temp = therm_data.temp * 10 / 16;
+	if(therm_data.temp-therm_old >= 10 || therm_data.temp-therm_old <= -10){
+		Led = 1;
+	}
+	else{
+		Led = 0;
+	}
 	therm_old = therm_data.temp;
 	//len = num2string(therm_data.temp,0, disp_temp+2);
 	/*num2string(therm_data.temp%10, disp_temp + 2+len);

@@ -8,8 +8,8 @@
 #include "display.h"
 unsigned long ev_flags = 0;
 sbit Led = P1^6;
-unsigned int potabho = 0;
-char ciao[] = "@               ";
+//unsigned int potabho = 0;
+//char ciao[] = "@               ";
 void dispatch(){
 	unsigned char asd = 1;
 	if(!i2c_lock){

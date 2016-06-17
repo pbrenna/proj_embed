@@ -40,7 +40,7 @@ code int lut_arccos[32] = {
 
 
 unsigned char buf_index = 0;
-sbit Led = P1^6;
+
 code char accel_init_code[] = {0x07,0x01};
 
 void init_accel(){
@@ -53,7 +53,6 @@ void read_axis(){
 }
 
 void rcv_axis(){
-	Led = STO;
 	i2c_command(ACCEL,axis,0,ev_nop, I2C_STOP,3, axes[buf_index++]);
 	buf_index = buf_index % BUF_LEN ;
 }
