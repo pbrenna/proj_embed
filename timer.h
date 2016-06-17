@@ -1,0 +1,2 @@
+#define TL0V 0xE5
+#define TH0V 0xBE

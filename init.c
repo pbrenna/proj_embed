@@ -1,5 +1,5 @@
 #include "c8051f020.h"
-
+#include "timer.h"
 
 void init(){
 	unsigned int i = 0;
@@ -30,6 +30,11 @@ void init(){
 	STO = 1;
 	STA = 0;
 	SI = 0;
+	TMOD |= 0x1;
+	ET0 = 1;
+	TL0 = TL0V;
+	TH0 = TH0V;
+	TR0 = 1;
 }
 
 
