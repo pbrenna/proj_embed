@@ -26,7 +26,7 @@ unsigned char _i2c_send_len;
 unsigned char _i2c_send_index;
 
 //control variables for i2c state machine
-bit i2c_lock = 0;
+__bit i2c_lock = 0;
 unsigned char _i2c_params;              //TODO: sostituire con 2 bit nudi e crudi?
 Event _i2c_callback;            //event to be enabled after stop
 
@@ -120,6 +120,6 @@ void i2c_state_machine(){
 	SI = 0;
 }
 
-void i2c_interrupt() interrupt 7 {
+void i2c_interrupt() __interrupt 7 {
 	i2c_state_machine();
 }

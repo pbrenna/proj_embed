@@ -1,7 +1,7 @@
 void init_accel();
 void read_axis();
 void rcv_axis();
-#define BUF_LEN 9
+#define BUF_LEN 7
 extern char axes[BUF_LEN][3];
 extern unsigned char buf_index;
-extern code int lut_arccos[32];
+extern __code int lut_arccos[32];

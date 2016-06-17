@@ -6,7 +6,7 @@ void i2c_command(unsigned char addr,
 								 unsigned char read_len,
 								 char*);
 void i2c_state_machine();
-extern bit i2c_lock;
+extern __bit i2c_lock;
 
 void init_display(Event callback);
 void display_write(char* text, unsigned char len, Event callb);

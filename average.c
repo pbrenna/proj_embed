@@ -2,7 +2,6 @@
 #include "ev.h"
 #include "c8051f020.h"
 int average[3]={0,0,0};
-sbit Led = P1^6;
 int orientation(char in){
 	if (in & 0x20){
 		in = ~(in|0xC0) + 1;

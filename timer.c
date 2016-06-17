@@ -1,9 +1,9 @@
 #include "ev.h"
 #include "timer.h"
 #include "c8051f020.h"
-sbit Led = P1^6;
+__sbit __at(0x90+6) Led;
 unsigned char _timer0_counter = 0;
-void timer0() interrupt 1{
+void timer0() __interrupt 1{
 	TL0 = TL0V;
 	TH0 = TH0V;
 	
