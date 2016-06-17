@@ -1,11 +1,11 @@
 CC = sdcc 
-CFLAGS = -c --model-small --opt-code-size
+CFLAGS = -c --model-medium --opt-code-size
 exe = main
 objects = main.rel ev.rel i2c_machine.rel thermometer.rel accel.rel display.rel timer.rel util.rel average.rel init.rel
 
 
 $(exe): $(objects)
-	sdcc $(objects) -o main 
+	sdcc --model-medium --out-fmt-ihx $(objects) -o main.ihx
 
 %.rel: %.c
 	$(CC) $(CFLAGS) $<
