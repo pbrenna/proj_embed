@@ -1,7 +1,7 @@
 #include "util.h"
-void memcpy(char* from, unsigned char size, char* to){
-	unsigned char i = 0;
-	for (i = 0; i < size; i++){
+void memcopy(char* from, unsigned char len, char* to){
+	unsigned char i;
+	for (i = 0; i < len; i++){
 		to[i] = from[i];
 	}
 }
