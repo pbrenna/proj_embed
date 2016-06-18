@@ -36,15 +36,9 @@ void dispatch(){
 		}else IF_EV(ev_thermometer_read){
 			EV_DISABLE(ev_thermometer_read);
 			thermometer_read();
-		}else IF_EV(ev_display_write_1){
-			EV_DISABLE(ev_display_write_1);
-			display_write_data_1();
-		}else IF_EV(ev_display_write_2){
-			EV_DISABLE(ev_display_write_2);
-			display_write_data_2();
-		}else IF_EV(ev_display_cursor_move){
-			EV_DISABLE(ev_display_cursor_move);
-			display_go_to_addr(0x40, ev_display_write_2);
+		}else IF_EV(ev_display_write){
+			EV_DISABLE(ev_display_write);
+			display_write_data();
 		}
 	}/*
 	if(SI){
