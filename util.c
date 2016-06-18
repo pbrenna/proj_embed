@@ -1,4 +1,11 @@
 #include "util.h"
+void memcpy(char* from, unsigned char size, char* to){
+	unsigned char i = 0;
+	for (i = 0; i < size; i++){
+		to[i] = from[i];
+	}
+}
+
 int pow(int a, int b){
 	int ret = 1;
 	for(;b > 0; b--){
