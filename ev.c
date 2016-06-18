@@ -46,10 +46,10 @@ void dispatch(){
 			EV_DISABLE(ev_display_cursor_move);
 			display_go_to_addr(0x40, ev_display_write_2);
 		}
-	}/*
+	}
 	if(SI){
 		i2c_state_machine();
-	}*/
+	}
 	IF_EV(ev_average){
 		EV_DISABLE(ev_average);
 		calc_average();
