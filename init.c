@@ -26,15 +26,19 @@ void init(){
 	EIE1 |= 2;			//enalbe smb interrupt
 	SCON0 |= 0x10;	//enable uart0 receive
 	P1MDOUT |= 0x40; //Set P1.6 to push-pull
+	P0MDOUT |= 0x40; //Set P0.6 to push-pull
 	//SM_BUSY=0;
 	STO = 1;
 	STA = 0;
 	SI = 0;
-	TMOD |= 0x1;
+	TMOD |= 0x11;		//both timers in 16 bit mode
 	ET0 = 1;
 	TL0 = TL0V;
 	TH0 = TH0V;
-	TR0 = 1;
+	TR0 = 1; 		//enable timer 0
+	TR1 = 1;		//enable timer 1
+	ET1 = 1;		//enable timer 1 interrupt
+	TH1 = 255;
 }
 
 

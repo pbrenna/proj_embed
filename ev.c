@@ -58,4 +58,8 @@ void dispatch(){
 		EV_DISABLE(ev_thermometer_save);
 		thermometer_save();
 	}
+	IF_EV(ev_check_average){
+		EV_DISABLE(ev_check_average);
+		check_average();
+	}
 }

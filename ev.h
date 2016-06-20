@@ -16,7 +16,8 @@ typedef enum Event {
 	ev_display_clear,
 	ev_display_write_1,
 	ev_display_write_2,
-	ev_display_cursor_move	
+	ev_display_cursor_move,
+	ev_check_average
 } Event;
 
 void dispatch();
