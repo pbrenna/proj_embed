@@ -4,7 +4,6 @@
 #include "i2c_machine.h"
 
 sbit Led = P1^6;
-
 void main(){
 	Led = 0;
 	init();
