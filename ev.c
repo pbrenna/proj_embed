@@ -6,10 +6,9 @@
 #include "c8051f020.h"
 #include "util.h"
 #include "display.h"
-unsigned long ev_flags = 0;
+unsigned int ev_flags = 0;
 sbit Led = P1^6;
-//unsigned int potabho = 0;
-//char ciao[] = "@               ";
+
 void dispatch(){
 	unsigned char asd = 1;
 	if(!i2c_lock){
@@ -21,16 +20,8 @@ void dispatch(){
 			rcv_axis();
 		} else IF_EV(ev_read_axis){
 			EV_DISABLE(ev_read_axis);
-			//for(potabho = 0; potabho < 50000; potabho++);
 			read_axis();
-		} /*else IF_EV(ev_ciao){
-			EV_DISABLE(ev_ciao);
-			Led = 1;
-			asd += num2string(average[0], 1,ciao+asd);
-			asd += num2string(average[1], 1,ciao+asd);
-			num2string(average[2], 1,ciao+asd);
-			display_write(ciao, 15, ev_nop);
-		}*/else IF_EV(ev_display_clear){
+		} else IF_EV(ev_display_clear){
 			EV_DISABLE(ev_display_clear);
 			display_clear(ev_display_write_1);
 		}else IF_EV(ev_thermometer_read){

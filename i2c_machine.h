@@ -8,9 +8,6 @@ void i2c_command(unsigned char addr,
 void i2c_state_machine();
 extern bit i2c_lock;
 
-void init_display(Event callback);
-void display_write(char* text, unsigned char len, Event callb);
-
 #define I2C_STOP 0x01
 #define I2C_RECV 0x02
 #define I2C_WRITE 0x04

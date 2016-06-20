@@ -41,11 +41,13 @@ void i2c_command(unsigned char addr, char* dati, unsigned char lungh, Event call
 	_i2c_read_len = read_len;  
 	_i2c_read_index = 0;
 	_i2c_return = ret;
+	//send start
 	STA=1;                     
 }
 
 
 void _i2c_stop(){
+	//stop if nothing to read
 	if ((_i2c_read_len == 0) && (_i2c_params & I2C_STOP) ){
 		STO = 1;
 		STA = 0;
@@ -61,12 +63,12 @@ void _i2c_stop(){
 
 
 void i2c_state_machine(){
-	//clear interrupt bit
 	switch(SMB0STA) {
 	case SMB_RESTART:
 	case SMB_START:
 		STA = 0;
 		STO = 0;
+		//send slave address
 		if (_i2c_params & I2C_WRITE)
 			SMB0DAT = _i2c_send_addr & 0xfe;
 		else
@@ -74,6 +76,7 @@ void i2c_state_machine(){
 		break;
 	case SMB_ADDR_NACK_R:
 	case SMB_ADDR_NACK:
+		//restart communication
 		STO = 1;
 		STA = 0;
 		STO = 0;
@@ -81,7 +84,7 @@ void i2c_state_machine(){
 		break;
 	case SMB_ADDR_ACK_R:
 	case SMB_ADDR_ACK:
-		//accendi display
+		//send first byte
 		if(_i2c_send_len)
 			SMB0DAT = _i2c_send_data[0];
 		else 
@@ -91,8 +94,7 @@ void i2c_state_machine(){
 		_i2c_send_index = _i2c_send_index +1;
 		//missing break: fall through
 	case SMB_DATA_NACK:
-		//micro_aspetta(wait_time[inst_p]);
-		//milli_aspetta(10);
+		//send next byte/resend same byte
 		if (_i2c_send_index < _i2c_send_len) {
 			SMB0DAT = _i2c_send_data[_i2c_send_index];
 		} else {
@@ -105,6 +107,7 @@ void i2c_state_machine(){
 		//controlla se ha finito di ricevere
 		if(_i2c_read_index == 2){
 			AA = 0;
+			//send nack next time
 		}
 		if(_i2c_read_index == _i2c_read_len){
 			STO = 1;

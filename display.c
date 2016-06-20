@@ -11,10 +11,13 @@ void init_display(Event callback){
 }
 
 void display_write(char* text, unsigned char len,Event callb){
+	//send text to display. Text must begin with @
+	//then enable event callb
 	i2c_command(DISPLAY, text, len, callb, I2C_STOP|I2C_WRITE, 0, 0);
 }
 
 void display_go_to_addr(unsigned char addr, Event callb){
+	//set address in display memory
 	gotoaddr_command[1] = addr | 0x80;
 	i2c_command(DISPLAY, gotoaddr_command, 2, callb, I2C_STOP|I2C_WRITE, 0, 0);
 }

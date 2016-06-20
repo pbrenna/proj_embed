@@ -14,10 +14,11 @@ int pow(int a, int b){
 	return ret;
 }
 
-void nop(){}
 
 int num2string(int num, char precision, char* string){
-	int i ;
+	//writes num on char* string, starting from position 0
+	//using #precision decimal digits
+	int i;
 	int n_caratteri;
 	i=0;
 	n_caratteri=0;

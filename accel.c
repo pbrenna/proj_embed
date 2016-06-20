@@ -3,6 +3,7 @@
 #include "c8051f020.h"
 #include "accel.h"
 
+//look up table for conversion from acceleration to orientation
 code int lut_arccos[32] = {
 	0,
 	27,
@@ -46,13 +47,16 @@ code char accel_init_code[] = {0x07,0x01};
 void init_accel(){
 	i2c_command(ACCEL, accel_init_code, sizeof(accel_init_code), ev_read_axis, I2C_STOP|I2C_WRITE,0,0);
 }
+
 code char axis [] = {0x00};
 char axes[BUF_LEN][3];
+
 void read_axis(){
 	i2c_command(ACCEL, axis, 1, ev_rcv_axis, I2C_WRITE,0,0);
 }
 
 void rcv_axis(){
+	//repeated start, receive 3 bytes.
 	i2c_command(ACCEL,axis,0,ev_nop, I2C_STOP,3, axes[buf_index++]);
 	buf_index = buf_index % BUF_LEN ;
 }

@@ -8,6 +8,8 @@ unsigned char idle_seconds = 0;
 bit idle = 0;
 int average[3]={0,0,0};
 int old_average[3] = {0,0,0};
+
+//use lookup table to convert from acceleration code word
 int orientation(char in){
 	if (in & 0x20){
 		in = ~(in|0xC0) + 1;
@@ -39,6 +41,7 @@ void calc_average(){
 void check_average(){
 	int dx,dy,dz;
 	if(idle_seconds > 0){
+		//check if the board is moving
 		dx = average[0]-old_average[0];
 		dy = average[1]-old_average[1];
 		dz = average[2]-old_average[2];
@@ -46,6 +49,7 @@ void check_average(){
 			idle_seconds = 0; idle = 0; return;
 		}
 	}
+	//store old average values
 	memcopy(average, sizeof(average), old_average);
 	
 	if (idle_seconds  < 5){
