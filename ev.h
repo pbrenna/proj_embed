@@ -7,19 +7,18 @@
 extern unsigned int ev_flags;
 
 typedef enum Event {
-	ev_ciao,
 	ev_thermometer_read,
 	ev_thermometer_save,
 	ev_init_accel,
 	ev_read_axis,
 	ev_rcv_axis,
 	ev_average,
-	ev_nop,
 	ev_display_clear,
 	ev_display_write_1,
 	ev_display_write_2,
 	ev_display_cursor_move,
-	ev_check_average
+	ev_check_average,
+	ev_nop
 } Event;
 
 void dispatch();

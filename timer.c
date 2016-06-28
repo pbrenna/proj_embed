@@ -30,7 +30,8 @@ void timer0() interrupt 1{
 	
 	//if p3.7 button is pressed, change brightness value.
 	if(!button){
-			lum+=8; lum = lum %240;
+		lum+=8; lum = lum %240;
+		idle = 0; idle_seconds = 0;
 	}
 }
 
